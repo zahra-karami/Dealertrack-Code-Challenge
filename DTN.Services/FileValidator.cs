@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿
 using DTN.Services.Interface;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace DTN.Services
 {
@@ -13,8 +13,8 @@ namespace DTN.Services
 
         public FileValidator(IConfiguration config)
         {
-            _fileSizeLimit = config.GetValue<long>("FileSizeLimit");
-            _permittedExtensions = config.GetSection("PermittedExtensions").Get<List<string>>();
+            _fileSizeLimit = Convert.ToInt64(config["FileSizeLimit"]);
+            _permittedExtensions = config["PermittedExtensions"].Split(new char[] { ',' }).ToList();
         }
 
         public List<string> Validate(IFormFile file)

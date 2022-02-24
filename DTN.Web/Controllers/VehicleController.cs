@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace DTN.Web.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")]
-    public class VehicleSaleController : ControllerBase
+    [Route("api/[controller]")]
+    public class VehicleController : ControllerBase
     {
-        private readonly ILogger<VehicleSaleController> _logger;
+        private readonly ILogger<VehicleController> _logger;
         private readonly ICsvSerializer<VehicleSaleModel> _serializer;
         private readonly IFileValidator _fileValidator;
 
-        public VehicleSaleController(ILogger<VehicleSaleController> logger, ICsvSerializer<VehicleSaleModel> serializer, IFileValidator fileValidator)
+        public VehicleController(ILogger<VehicleController> logger, ICsvSerializer<VehicleSaleModel> serializer, IFileValidator fileValidator)
         {
             _logger = logger;
 
@@ -24,6 +24,7 @@ namespace DTN.Web.Controllers
         }
 
         [HttpPost, DisableRequestSizeLimit]
+        [Route("upload")]
         public async Task<IActionResult> UploadFile()
         {
             try
@@ -56,7 +57,46 @@ namespace DTN.Web.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "Error on VehicleSale.FileUpload");
+                _logger.LogError(ex, "Error on VehicleSale.FileUpload");
+                return StatusCode(500, $"Internal server error");
+
+            }
+        }
+
+
+
+        [HttpGet]
+        [Route("get")]
+        public async Task<IActionResult> GetVehicle()
+        {
+            try
+            {
+                var response = new ResponseModel<VehicleSaleResponseModel>();
+                
+
+
+                //var list = await _serializer.DeserializeAsync(file.OpenReadStream());
+                //var mostOftenSoldVehicle = list.GroupBy(c => c.Vehicle)
+                //    .OrderByDescending(gp => gp.Count())
+                //    .Take(1)
+                //    .Select(g => g.Key).FirstOrDefault();
+
+
+                response.IsSucceeded = true;
+                //response.Result = new VehicleSaleResponseModel
+                //{
+                //    List = list,
+                //    MostOftenSoldVehicle = mostOftenSoldVehicle
+                //};
+                response.ResponseCode = 200;
+
+               
+                return Ok(response);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error on VehicleSale.FileUpload");
                 return StatusCode(500, $"Internal server error: {ex}");
 
             }

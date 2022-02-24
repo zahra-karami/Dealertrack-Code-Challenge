@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTN.Web", "DTN.Web\DTN.Web.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTN.Services", "DTN.Services\DTN.Services.csproj", "{614F820D-58BC-43E8-B5D9-60DDBCDEE5E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTN.Model", "DTN.Model\DTN.Model.csproj", "{808539CD-1F50-4A81-AABE-C1E038B0F4BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTN.Model", "DTN.Model\DTN.Model.csproj", "{808539CD-1F50-4A81-AABE-C1E038B0F4BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
