@@ -8,5 +8,6 @@ namespace DTN.Logic.Services.Interfaces
         Task AddNewFile(IList<VehicleModel> vehicles);
         Task<IEnumerable<VehicleModel>> GetAllVehicles();
         Task<string> GetMostOftenSoldVehicle();
+        Task DeleteDeal(Guid id);
     }
 }

@@ -7,5 +7,7 @@ namespace DTN.Logic.Repositories.Interfaces
 
         Task Add(VehicleModel vehicle);      
         Task<List<VehicleModel>> GetAll();
+        Task<List<VehicleModel>> GetByDealNumber(int dealnumber);
+        Task Delete(Guid id);
     }
 }

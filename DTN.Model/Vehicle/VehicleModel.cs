@@ -8,7 +8,7 @@ namespace DTN.Models
     {
         [DynamoDBProperty("Id")]
         [DynamoDBHashKey]
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         [DynamoDBProperty("dealNumber")]
         public int DealNumber { set; get; }
         [DynamoDBProperty("customerName")]

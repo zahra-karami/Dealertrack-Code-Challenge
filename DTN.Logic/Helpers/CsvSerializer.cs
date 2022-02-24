@@ -55,7 +55,7 @@ namespace DTN.Logic.Helpers
             {
                 var encoding = await GetEncodingAsync(stream);
                 stream.Position = 0;
-                using (var sr = new StreamReader(stream, encoding))
+                using (var sr = new StreamReader(stream, encoding, true))
                 {
                     var header = await sr.ReadLineAsync();
                     columns = string.IsNullOrEmpty(header) ? new string[0] : header.Split(Separator);

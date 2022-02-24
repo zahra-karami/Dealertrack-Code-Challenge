@@ -28,7 +28,7 @@ namespace DTN.Web.Controllers
         {
             try
             {
-                var response = new ResponseModel<string>();
+                var response = new ResponseModel<VehicleGetResponseModel>();
                 var file = Request.Form.Files.FirstOrDefault();
 
                 response.ResponseMessage = _fileService.Validate(file);
@@ -36,8 +36,9 @@ namespace DTN.Web.Controllers
 
                 var list = await _fileService.Deserialize(file);
                 await _vehicleService.AddNewFile(list);
+                var mostOftenSoldVehicle = await _vehicleService.GetMostOftenSoldVehicle();
 
-                response.Result = "success";
+                response.Result = new VehicleGetResponseModel { List = list, MostOftenSoldVehicle= mostOftenSoldVehicle };
                 response.IsSucceeded = true;
                 response.ResponseCode = 200;
 
@@ -64,10 +65,10 @@ namespace DTN.Web.Controllers
                 var response = new ResponseModel<VehicleGetResponseModel>();
 
                 var list = await _vehicleService.GetAllVehicles();
-                var mostOftenSoldVehicle = await _vehicleService.GetMostOftenSoldVehicle(); 
+                var mostOftenSoldVehicle = await _vehicleService.GetMostOftenSoldVehicle();
 
 
-               
+
                 response.Result = new VehicleGetResponseModel
                 {
                     List = list.ToList(),
@@ -75,7 +76,30 @@ namespace DTN.Web.Controllers
                 };
 
                 response.IsSucceeded = true;
-                response.ResponseCode = 200;               
+                response.ResponseCode = 200;
+                return Ok(response);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error on VehicleSale.FileUpload");
+                return StatusCode(500, $"Internal server error: {ex}");
+
+            }
+        }
+
+
+        [HttpPost]
+        [Route("delete/{id}")]
+        public async Task<IActionResult> DeleteDeal(Guid id)
+        {
+            try
+            {
+                var response = new ResponseModel<string>();
+                await _vehicleService.DeleteDeal(id);
+                response.Result = "success";
+                response.IsSucceeded = true;
+                response.ResponseCode = 200;
                 return Ok(response);
 
             }

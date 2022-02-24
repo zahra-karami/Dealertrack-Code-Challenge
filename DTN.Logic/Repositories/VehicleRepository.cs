@@ -22,7 +22,6 @@ namespace DTN.Logic.Repositories
         {
             try
             {
-                             
                 await _context.SaveAsync(vehicle);
             }
             catch (Exception ex)
@@ -35,6 +34,21 @@ namespace DTN.Logic.Repositories
                 _logger.LogError(ex, "Error on VehicleRepository");
                 throw;
             }
+        }
+
+        public async Task Delete(Guid id)
+        {
+            await _context.DeleteAsync<VehicleModel>(id);
+        }
+
+        public async Task<List<VehicleModel>> GetByDealNumber(int dealnumber)
+        {
+
+            var conditions = new List<ScanCondition>{
+                new ScanCondition("DealNumber", Amazon.DynamoDBv2.DocumentModel.ScanOperator.Equal, dealnumber)
+            };
+
+            return await _context.ScanAsync<VehicleModel>(conditions).GetNextSetAsync();
         }
 
         public async Task<List<VehicleModel>> GetAll()

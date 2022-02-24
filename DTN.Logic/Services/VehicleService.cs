@@ -21,9 +21,18 @@ namespace DTN.Logic.Services
         {
             foreach (var vehicle in vehicles)
             {
+
+                var exists = (await _repository.GetByDealNumber(vehicle.DealNumber)).Any();
+                if (exists) continue;
+
                 vehicle.Id = Guid.NewGuid();
                 await _repository.Add(vehicle);
             }
+        }
+
+        public async Task DeleteDeal(Guid id)
+        {
+            await _repository.Delete(id);
         }
 
         public async Task<IEnumerable<VehicleModel>> GetAllVehicles()
