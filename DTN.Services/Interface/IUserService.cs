@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using DealerTrack.Web.Models;
-using DealerTrack.Web.Utilities;
+﻿using DTN.Models;
+using DTN.Services.Utilities;
 
-namespace DealerTrack.Web.Services.Interface
+
+namespace DTN.Services.Interface
 {
     public interface IUserService
     {

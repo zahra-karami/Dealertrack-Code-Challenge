@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using DealerTrack.Web.Services.Interface;
-using DealerTrack.Web.Utilities;
+using DTN.Services.Interface;
+using DTN.Services.Utilities;
 
-namespace DealerTrack.Web.Services
+namespace DTN.Services
 {
     public class CsvSerializer<T> : ICsvSerializer<T> where T : class, new()
     {

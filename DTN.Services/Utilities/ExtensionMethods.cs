@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DealerTrack.Web.Utilities
+namespace DTN.Services.Utilities
 {
     public static class ExtensionMethods
     {

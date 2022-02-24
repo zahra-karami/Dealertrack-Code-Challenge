@@ -1,12 +1,9 @@
 ﻿using System.Collections.Concurrent;
-using System.Linq;
-using System.Threading.Tasks;
-using DealerTrack.Web.Models;
-using DealerTrack.Web.Services.Interface;
-using DealerTrack.Web.Utilities;
+using DTN.Models;
+using DTN.Services.Interface;
+using DTN.Services.Utilities;
 
-
-namespace DealerTrack.Web.Services
+namespace DTN.Services
 {
     public class UserService : IUserService
     {

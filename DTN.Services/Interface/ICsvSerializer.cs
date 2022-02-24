@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace DealerTrack.Web.Services.Interface
+namespace DTN.Services.Interface
 {
     public interface ICsvSerializer<T>
     {

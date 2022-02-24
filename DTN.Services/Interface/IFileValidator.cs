@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
-namespace DealerTrack.Web.Services.Interface
+namespace DTN.Services.Interface
 {
     public interface IFileValidator
     {

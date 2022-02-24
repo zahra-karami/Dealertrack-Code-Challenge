@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Cryptography;
-using DealerTrack.Web.Services.Interface;
+using DTN.Services.Interface;
 
-namespace DealerTrack.Web.Services
+namespace DTN.Services
 {
     public sealed class PasswordHasher : IPasswordHasher
     {

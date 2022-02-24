@@ -1,4 +1,4 @@
-﻿namespace DealerTrack.Web.Services.Interface
+﻿namespace DTN.Services.Interface
 {
     public interface IPasswordHasher
     {

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DealerTrack.Web.Utilities
+﻿
+namespace DTN.Models
 {
     [Serializable]
     public class ResponseModel<T>

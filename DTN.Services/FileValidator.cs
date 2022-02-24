@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using DealerTrack.Web.Services.Interface;
+using DTN.Services.Interface;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 
-namespace DealerTrack.Web.Services
+namespace DTN.Services
 {
     public class FileValidator : IFileValidator
     {
