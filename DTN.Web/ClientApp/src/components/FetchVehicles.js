@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import NumberFormat from 'react-number-format';
+import dateFormat from 'dateformat';
 
 export class FetchVehicles extends Component {
     static displayName = FetchVehicles.name;
@@ -12,7 +14,7 @@ export class FetchVehicles extends Component {
         this.populateVehiclesData();
     }
 
-    static rendervehiclesTable(vehicles) {
+    rendervehiclesTable = (vehicles) => {
         return (
             <table className='table table-striped' aria-labelledby="tabelLabel">
                 <thead>
@@ -28,11 +30,24 @@ export class FetchVehicles extends Component {
                 <tbody>
                     {vehicles.map(vehicle =>
                         <tr key={vehicle.dealNumber}>
+
+                            <td>{vehicle.dealNumber}</td>
                             <td>{vehicle.customerName}</td>
                             <td>{vehicle.dealershipName}</td>
                             <td>{vehicle.vehicle}</td>
-                            <td>{vehicle.price}</td>
-                            <td>{vehicle.date}</td>
+                            <td>
+                                <NumberFormat
+                                    value={vehicle.price}
+                                    className="foo"
+                                    displayType={'text'}
+                                    thousandSeparator={true}
+                                    prefix={'CAD$'}
+                                    renderText={(value, props) => <div {...props}>{value}</div>}
+                                />
+                            </td>
+                            <td>
+                                {dateFormat(vehicle.date, 'yyyy/mm/dd')}
+                            </td>
                         </tr>
                     )}
                 </tbody>
@@ -43,20 +58,20 @@ export class FetchVehicles extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : FetchVehicles.rendervehiclesTable(this.state.vehicles);
+            : this.rendervehiclesTable(this.state.vehicles);
 
         return (
             <div>
                 <h1 id="tabelLabel" >Weather vehicle</h1>
-                <p>This component demonstrates fetching data from the server.</p>
+                <p>This component demonstrates fetching data from AWS DynamoDb.</p>
                 {contents}
             </div>
         );
     }
 
     async populateVehiclesData() {
-        const response = await fetch('vehicle');
+        const response = await fetch('/api/vehicle/get');
         const data = await response.json();
-        this.setState({ vehicles: data, loading: false });
+        this.setState({ vehicles: data.result.list, loading: false });
     }
 }

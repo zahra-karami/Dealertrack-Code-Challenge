@@ -1,6 +1,5 @@
 ﻿using DTN.Models;
 using Microsoft.AspNetCore.Mvc;
-using DTN.Logic.Helpers.Interfaces;
 using DTN.Logic.Services.Interfaces;
 
 namespace DTN.Web.Controllers
@@ -39,6 +38,7 @@ namespace DTN.Web.Controllers
                 await _vehicleService.AddNewFile(list);
 
                 response.Result = "success";
+                response.IsSucceeded = true;
                 response.ResponseCode = 200;
 
                 _logger.LogInformation($"File {file.FileName} Uploaded Successfully");
@@ -67,13 +67,14 @@ namespace DTN.Web.Controllers
                 var mostOftenSoldVehicle = await _vehicleService.GetMostOftenSoldVehicle(); 
 
 
-                response.IsSucceeded = true;
+               
                 response.Result = new VehicleGetResponseModel
                 {
                     List = list.ToList(),
                     MostOftenSoldVehicle = mostOftenSoldVehicle
                 };
-              
+
+                response.IsSucceeded = true;
                 response.ResponseCode = 200;               
                 return Ok(response);
 

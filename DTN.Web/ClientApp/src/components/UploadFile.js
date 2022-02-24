@@ -5,7 +5,7 @@ export class UploadFile extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { selectedFile: null };
+        this.state = { selectedFile: null, uploaded: false, loading: false, vehicles: [], mostOftenSoldVehicle: '' };
     }
 
     componentDidMount() {
@@ -19,6 +19,9 @@ export class UploadFile extends Component {
 
     onFileUpload = () => {
 
+        this.setState({ uploaded: true });
+        this.setState({ loading: true });
+
         // Create an object of formData
         const formData = new FormData();
 
@@ -29,44 +32,65 @@ export class UploadFile extends Component {
             this.state.selectedFile.name
         );
 
-        // Details of the uploaded file
-        console.log(this.state.selectedFile);
-
-        // Request made to the backend api
-        // Send formData object
-        //axios.post("/api/Vehicle/UploadFile", formData);
-
         fetch('/api/vehicle/upload',
             {
                 method: 'POST',
                 body: formData,
             }
         )
-        .then((response) => response.json())
-        .then((result) => {
-                console.log('Success:', result);
-        })
-        .catch((error) => {
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.isSucceeded === true) {                    
+
+                    fetch('/api/vehicle/get')
+                        .then((res) => res.json())
+                        .then((vehicleResult) => {
+
+                            console.log('data', vehicleResult.result.list);
+
+                            this.setState({ vehicles: vehicleResult.result.list, loading: false  });
+                            this.setState({ mostOftenSoldVehicle: vehicleResult.result.mostOftenSoldVehicle });
+                        });
+                }
+            })
+            .catch((error) => {
                 console.error('Error:', error);
-        });
+            });
     };
 
     fileData = () => {
 
-        if (this.state.selectedFile) {
+        if (this.state.uploaded === true) {
 
             return (
                 <div>
-                    <h2>File Details:</h2>
-                    <p>File Name: {this.state.selectedFile.name}</p>
-                    <p>File Type: {this.state.selectedFile.type}</p>
+                    <div class="alert alert-success" role="alert">
+                        {this.state.selectedFile.name} successfully uploaded
+                    </div>
+                    <div class="alert alert-primary" role="alert">
+                        The most often sold vehicle : <strong>{this.state.mostOftenSoldVehicle}</strong>
+                    </div>
                 </div>
             );
         } else {
             return (
-                <div>
-                    <br />
-                    <h4>Choose a file!</h4>
+                <div class="form-group row">
+                    <h1 id="tabelLabel" >Upload a vehcile file!</h1>
+                    <p>Upload vehicle sales data file to visualize the data.</p>
+                    <div class="form-group">
+                        <input type="file" onChange={this.onFileChange} class="form-control-file" />
+
+                    </div>
+                    <div class="form-group">
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            <span>Maximum allowed file size is 1MB. </span>
+                            <span>Accepted file types : .csv</span>
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <button onClick={this.onFileUpload} class="btn btn-success btn-s"> <span class="glyphicon glyphicon-upload"></span>Upload File</button>
+                    </div>
+
                 </div>
             );
         }
@@ -74,18 +98,8 @@ export class UploadFile extends Component {
 
     render() {
         return (
-            <div>
-                <h1 id="tabelLabel" >upload vehcile file!</h1>
-                <p>Upload vehicle sales data file to visualize the data.</p>
-                <div>
-                    <div>
-                        <input type="file" onChange={this.onFileChange} />
-                        <button onClick={this.onFileUpload}>
-                            Upload!
-                        </button>
-                    </div>
-                    {this.fileData()}
-                </div>
+            <div class="container">
+                {this.fileData()}
             </div>
         );
     }
