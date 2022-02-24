@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DTN.Services.Configuration
+﻿
+namespace DTN.Logic.Configurations
 {
     public class DynamoDbConfiguration
     {

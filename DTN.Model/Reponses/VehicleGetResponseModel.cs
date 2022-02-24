@@ -1,9 +1,9 @@
 ﻿namespace DTN.Models
 {
     [Serializable]
-    public class VehicleSaleResponseModel
+    public class VehicleGetResponseModel
     {
-        public IList<VehicleSaleModel> List { set; get; }
+        public IList<VehicleModel> List { set; get; }
         public string MostOftenSoldVehicle { get; set; }
     }
 }

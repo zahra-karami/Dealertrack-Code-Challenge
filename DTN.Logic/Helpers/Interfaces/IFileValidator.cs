@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace DTN.Services.Interface
+namespace DTN.Logic.Helpers.Interfaces
 {
     public interface IFileValidator
     {

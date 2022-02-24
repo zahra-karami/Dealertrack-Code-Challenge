@@ -1,0 +1,46 @@
+﻿using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.DataModel;
+using DTN.Logic.Repositories.Interfaces;
+using DTN.Models;
+using Microsoft.Extensions.Logging;
+
+namespace DTN.Logic.Repositories
+{
+    public class VehicleRepository : IVehicleRepository
+    {
+
+        private readonly IDynamoDBContext _context;
+        private readonly ILogger<VehicleRepository> _logger;
+
+        public VehicleRepository(ILogger<VehicleRepository> logger, IDynamoDBContext dynamoDbContext)
+        {
+            _context = dynamoDbContext;
+            _logger = logger;
+        }
+
+        public async Task Add(VehicleModel vehicle)
+        {
+            try
+            {
+                             
+                await _context.SaveAsync(vehicle);
+            }
+            catch (Exception ex)
+            {
+                if (ex is AmazonDynamoDBException)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+                _logger.LogError(ex, "Error on VehicleRepository");
+                throw;
+            }
+        }
+
+        public async Task<List<VehicleModel>> GetAll()
+        {
+            var conditions = new List<ScanCondition>();
+            return await _context.ScanAsync<VehicleModel>(conditions).GetRemainingAsync();
+        }
+    }
+}

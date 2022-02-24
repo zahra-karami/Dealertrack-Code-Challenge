@@ -37,8 +37,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DTN.Model\DTN.Model.csproj" />
-    <ProjectReference Include="..\DTN.Services\DTN.Services.csproj" />
+    <ProjectReference Include="..\DTN.Logic\DTN.Logic.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

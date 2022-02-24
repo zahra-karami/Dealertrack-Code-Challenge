@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Cryptography;
-using DTN.Services.Interface;
+using DTN.Logic.Helpers.Interfaces;
 
-namespace DTN.Services
+namespace DTN.Logic.Helpers
 {
     public sealed class PasswordHasher : IPasswordHasher
     {

@@ -5,9 +5,14 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTN.Web", "DTN.Web\DTN.Web.csproj", "{D5403F8A-1F76-4974-825E-ABF1433CFDA0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTN.Services", "DTN.Services\DTN.Services.csproj", "{614F820D-58BC-43E8-B5D9-60DDBCDEE5E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTN.Logic", "DTN.Logic\DTN.Logic.csproj", "{614F820D-58BC-43E8-B5D9-60DDBCDEE5E6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTN.Model", "DTN.Model\DTN.Model.csproj", "{808539CD-1F50-4A81-AABE-C1E038B0F4BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{38C36DCF-AA98-4A97-B4C3-1ECA7125F271}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

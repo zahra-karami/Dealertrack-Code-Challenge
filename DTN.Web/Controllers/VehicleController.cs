@@ -1,6 +1,7 @@
 ﻿using DTN.Models;
-using DTN.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
+using DTN.Logic.Helpers.Interfaces;
+using DTN.Logic.Services.Interfaces;
 
 namespace DTN.Web.Controllers
 {
@@ -9,18 +10,17 @@ namespace DTN.Web.Controllers
     public class VehicleController : ControllerBase
     {
         private readonly ILogger<VehicleController> _logger;
-        private readonly ICsvSerializer<VehicleSaleModel> _serializer;
-        private readonly IFileValidator _fileValidator;
 
-        public VehicleController(ILogger<VehicleController> logger, ICsvSerializer<VehicleSaleModel> serializer, IFileValidator fileValidator)
+        private readonly IVehicleService _vehicleService;
+        private readonly IFileService _fileService;
+
+        public VehicleController(ILogger<VehicleController> logger, IFileService fileService, IVehicleService vehicleService)
         {
             _logger = logger;
+            _vehicleService = vehicleService;
+            _fileService = fileService;
 
-            _fileValidator = fileValidator;
 
-            _serializer = serializer;
-            _serializer.UseLineNumbers = false;
-            _serializer.UseTextQualifier = true;
         }
 
         [HttpPost, DisableRequestSizeLimit]
@@ -29,26 +29,16 @@ namespace DTN.Web.Controllers
         {
             try
             {
-                var response = new ResponseModel<VehicleSaleResponseModel>();
+                var response = new ResponseModel<string>();
                 var file = Request.Form.Files.FirstOrDefault();
 
-                response.ResponseMessage = _fileValidator.Validate(file);
+                response.ResponseMessage = _fileService.Validate(file);
                 if (response.ResponseMessage.Count > 0) return BadRequest(response);
 
+                var list = await _fileService.Deserialize(file);
+                await _vehicleService.AddNewFile(list);
 
-                var list = await _serializer.DeserializeAsync(file.OpenReadStream());
-                var mostOftenSoldVehicle = list.GroupBy(c => c.Vehicle)
-                    .OrderByDescending(gp => gp.Count())
-                    .Take(1)
-                    .Select(g => g.Key).FirstOrDefault();
-
-
-                response.IsSucceeded = true;
-                response.Result = new VehicleSaleResponseModel
-                {
-                    List = list,
-                    MostOftenSoldVehicle = mostOftenSoldVehicle
-                };
+                response.Result = "success";
                 response.ResponseCode = 200;
 
                 _logger.LogInformation($"File {file.FileName} Uploaded Successfully");
@@ -57,7 +47,7 @@ namespace DTN.Web.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error on VehicleSale.FileUpload");
+                _logger.LogError(ex, "Error on Vehicle.FileUpload");
                 return StatusCode(500, $"Internal server error");
 
             }
@@ -71,26 +61,20 @@ namespace DTN.Web.Controllers
         {
             try
             {
-                var response = new ResponseModel<VehicleSaleResponseModel>();
-                
+                var response = new ResponseModel<VehicleGetResponseModel>();
 
-
-                //var list = await _serializer.DeserializeAsync(file.OpenReadStream());
-                //var mostOftenSoldVehicle = list.GroupBy(c => c.Vehicle)
-                //    .OrderByDescending(gp => gp.Count())
-                //    .Take(1)
-                //    .Select(g => g.Key).FirstOrDefault();
+                var list = await _vehicleService.GetAllVehicles();
+                var mostOftenSoldVehicle = await _vehicleService.GetMostOftenSoldVehicle(); 
 
 
                 response.IsSucceeded = true;
-                //response.Result = new VehicleSaleResponseModel
-                //{
-                //    List = list,
-                //    MostOftenSoldVehicle = mostOftenSoldVehicle
-                //};
-                response.ResponseCode = 200;
-
-               
+                response.Result = new VehicleGetResponseModel
+                {
+                    List = list.ToList(),
+                    MostOftenSoldVehicle = mostOftenSoldVehicle
+                };
+              
+                response.ResponseCode = 200;               
                 return Ok(response);
 
             }

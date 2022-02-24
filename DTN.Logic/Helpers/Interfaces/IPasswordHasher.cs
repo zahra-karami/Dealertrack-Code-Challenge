@@ -1,4 +1,4 @@
-﻿namespace DTN.Services.Interface
+﻿namespace DTN.Logic.Helpers.Interfaces
 {
     public interface IPasswordHasher
     {

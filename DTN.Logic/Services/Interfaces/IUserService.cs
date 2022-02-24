@@ -1,8 +1,6 @@
 ﻿using DTN.Models;
-using DTN.Services.Utilities;
 
-
-namespace DTN.Services.Interface
+namespace DTN.Logic.Services.Interfaces
 {
     public interface IUserService
     {

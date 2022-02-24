@@ -2,10 +2,10 @@
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using DTN.Services.Interface;
-using DTN.Services.Utilities;
+using DTN.Logic.Helpers.Interfaces;
+using DTN.Logic.Utilities;
 
-namespace DTN.Services
+namespace DTN.Logic.Helpers
 {
     public class CsvSerializer<T> : ICsvSerializer<T> where T : class, new()
     {

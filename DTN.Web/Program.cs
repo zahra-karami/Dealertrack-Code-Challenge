@@ -1,11 +1,17 @@
-using DTN.Web.Middlewares;
+
 using Serilog;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using DTN.Services.Interface;
-using DTN.Services;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
-using DTN.Services.Configuration;
+using DTN.Logic.Helpers.Interfaces;
+using DTN.Logic.Services.Interfaces;
+using DTN.Logic.Repositories.Interfaces;
+using DTN.Logic.Configurations;
+using DTN.Logic.Helpers;
+using DTN.Logic.Services;
+using DTN.Logic.Repositories;
+using DTN.Web.Middlewares;
+using Microsoft.Extensions.Options;
 
 try
 {
@@ -22,18 +28,20 @@ try
     builder.Host.UseSerilog();
 
     // Add services to the container.
-    builder.Services.AddControllers();
-    builder.Services.AddSingleton<IFileValidator>(sp => new FileValidator(sp.GetService<IConfiguration>()));
-    builder.Services.AddTransient(typeof(ICsvSerializer<>), typeof(CsvSerializer<>));
-    builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
-    builder.Services.AddSingleton<IUserService, UserService>();
+    builder.Services.AddControllers();  
+ 
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddDefaultAWSOptions(configuration.GetAWSOptions());
     builder.Services.Configure<DynamoDbConfiguration>(options => configuration.GetSection("DynamoDb").Bind(options));
-    builder.Services.AddTransient<IOnboardingRepository, OnboardingRepository>();
-    builder.Services.AddTransient<IOnboardingService, OnboardingService>();
-    builder.Services.AddTransient<IEmailService, EmailService>();
+    builder.Services.AddTransient<IVehicleRepository, VehicleRepository>();    
+    builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
+    builder.Services.AddSingleton<IFileValidator>(sp => new FileValidator(sp.GetService<IConfiguration>()));
+    builder.Services.AddTransient(typeof(ICsvSerializer<>), typeof(CsvSerializer<>));
+    builder.Services.AddSingleton<IUserService, UserService>();
+    builder.Services.AddTransient<IVehicleService, VehicleService>();
+    builder.Services.AddTransient<IFileService, FileService>();
+
     //DynamoDbConfiguration
     builder.Services.AddSingleton<IAmazonDynamoDB, AmazonDynamoDBClient>();
     builder.Services.AddSingleton(provider => new DynamoDBContextConfig

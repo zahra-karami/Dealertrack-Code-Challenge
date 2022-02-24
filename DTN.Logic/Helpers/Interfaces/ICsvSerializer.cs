@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace DTN.Services.Interface
+namespace DTN.Logic.Helpers.Interfaces
 {
     public interface ICsvSerializer<T>
     {

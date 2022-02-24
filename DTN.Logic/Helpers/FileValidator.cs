@@ -1,9 +1,9 @@
 ﻿
-using DTN.Services.Interface;
+using DTN.Logic.Helpers.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 
-namespace DTN.Services
+namespace DTN.Logic.Helpers
 {
     public class FileValidator : IFileValidator
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DTN.Services.Utilities
+namespace DTN.Logic.Utilities
 {
     public static class ExtensionMethods
     {

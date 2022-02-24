@@ -1,9 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using DTN.Models;
-using DTN.Services.Interface;
-using DTN.Services.Utilities;
+using DTN.Logic.Services.Interfaces;
+using DTN.Logic.Helpers.Interfaces;
 
-namespace DTN.Services
+namespace DTN.Logic.Services
 {
     public class UserService : IUserService
     {
