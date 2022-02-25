@@ -20,9 +20,22 @@ export class Home extends Component {
                     <a class="btn btn-success btn-lg" href="/fetch-vehicles">Start Demo!</a>
                 </p>
                 <hr class="my-4" />
+                <h4>AWS Credential:</h4>
+                <div>
+                    Download your credential for 'awscoxautolabs220' or 'awsdtncanadal2np' from ALKS.
+                    Then, save it in at 'C:\Users\your-username\.aws\credentials' as [default] profile.
+                </div>
+                <hr class="my-4" />
+                <h4>Local Docker Build and Run:</h4>
+                <div>                   
+                    <p>on windows run this command from project directory after building the project: </p>
+                    <code>ddocker-compose -f "docker-compose.yml" -f "docker-compose.override.yml" -f "./obj/Docker/docker-compose.vs.debug.g.yml" -p dockercompose-dtn --ansi never up -d </code>
+                </div>
+
+                <hr class="my-4" />
                 <h4>Here is a guid for Demo:</h4>
                 <div className="lead">
-                    <div>- To successful demo you need set creditial for <code>awscoxautolabs220</code> server on your local machine</div>
+                    <div>- To successful demo you need set creditial for <code>awscoxautolabs220</code> or  <code>awsdtncanadal2np</code> server on your local machine</div>
                     <div>- Click on <cite>'Demo!'</cite>. In this page, you can see a list of vehicle sale records that have been read from AWS DynamoDB table named <code>'DealerTrackVehicles'</code></div>
                     <div>- Then, you can Delete records from server or upload a new file </div>
                     <div>- To upload a new file click on <cite>'Upload New Vehicle'</cite> on demo page.</div>
