@@ -10,7 +10,8 @@
 		<DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>df2ffae1-9958-4fa0-b70c-6c76032f6634</UserSecretsId>
-		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>		
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>		
 	</PropertyGroup>
 
 	<ItemGroup>
